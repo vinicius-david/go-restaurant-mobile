@@ -32,15 +32,23 @@ interface Food {
   id: number;
   name: string;
   description: string;
+  category: number;
   price: number;
   thumbnail_url: string;
   formattedPrice: string;
+  extras: Extra[];
 }
 
 interface Category {
   id: number;
   title: string;
   image_url: string;
+}
+
+interface Extra {
+  id: number;
+  name: string;
+  value: number;
 }
 
 const Dashboard: React.FC = () => {
@@ -83,14 +91,69 @@ const Dashboard: React.FC = () => {
           setFoods(newData);
         }
       } else {
-        const { data } = await api.get(`/foods`);
-        const newData = data.map((food: Food) => {
-          return {
-            ...food,
-            formattedPrice: formatValue(food.price),
-          };
-        });
-        setFoods(newData);
+        const newFoods = [
+          {
+            id: 1,
+            name: 'Ao molho',
+            description:
+              'Macarrão ao molho branco, fughi e cheiro verde das montanhas.',
+            price: 19.9,
+            formattedPrice: String(formatValue(19.9)),
+            category: 1,
+            thumbnail_url:
+              'https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-gorestaurant-mobile/ao_molho.png',
+            extras: [
+              {
+                id: 1,
+                name: 'Bacon',
+                value: 1.5,
+              },
+              {
+                id: 2,
+                name: 'Frango',
+                value: 2,
+              },
+            ],
+          },
+          {
+            id: 2,
+            name: 'Veggie',
+            description:
+              'Macarrão com pimentão, ervilha e ervas finas colhidas no himalaia.',
+            price: 21.9,
+            formattedPrice: String(formatValue(21.9)),
+            category: 2,
+            thumbnail_url:
+              'https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-gorestaurant-mobile/veggie.png',
+            extras: [
+              {
+                id: 3,
+                name: 'Bacon',
+                value: 1.5,
+              },
+            ],
+          },
+          {
+            id: 3,
+            name: 'A la Camarón',
+            description:
+              'Macarrão com vegetais de primeira linha e camarão dos 7 mares.',
+            price: 25.9,
+            formattedPrice: String(formatValue(25.9)),
+            category: 3,
+            thumbnail_url:
+              'https://storage.googleapis.com/golden-wind/bootcamp-gostack/desafio-gorestaurant-mobile/camarao.png',
+            extras: [
+              {
+                id: 4,
+                name: 'Bacon',
+                value: 1.5,
+              },
+            ],
+          },
+        ];
+
+        setFoods(newFoods);
       }
     }
 
